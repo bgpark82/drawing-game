@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            @keyframes blink {
+                50% {
+                    opacity: 0.7;
+                }
+            }
+            .blink {
+                animation: blink 1s linear infinite;
+            }
+            table {
+                border-collapse: collapse;
+                margin: 30px auto 0;
+            }
+            td {
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                user-select: none;
+            }
+        </style>
+    </head>
+    <body>
+        <section style="text-align:center;">
+            <h1 style="color:#208AFB">BSIDE TOWER JAM</h1>
+            <table id="stage"></table>
+        </section>
+    </body>
+    <script src="Block.js"></script>
+    <script src="Game.js"></script>
+</html>
