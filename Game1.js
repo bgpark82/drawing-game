@@ -1,11 +1,9 @@
 const Game = (() => {
     let isDown, startBlock, currBlock; 
     const selected = [];
-    const down = (data) =>{
-        const {pageX:x,pageY:y} = data;
+    const down = ({pageX:x,pageY:y}) =>{
         if(isDown) return;
         const curr = getBlock(x,y)
-        
         if(!curr) return;
         isDown = true;
         selected.length = 0;
@@ -24,11 +22,9 @@ const Game = (() => {
         return data[axisY][axisX];
     }
 
-    const move = data => {
-        const {pageX:x, pageY:y} = data;
+    const move = ({pageX:x, pageY:y}) => {
         if(!isDown) return;
         const curr = getBlock(x,y)
-        console.log(curr)
         const isDiffType = curr.type != startBlock.type;
         if(!curr || isDiffType || !isNext(curr)) return;
         if(selected.indexOf(curr) == -1) selected.push(curr)
@@ -39,22 +35,23 @@ const Game = (() => {
     const isNext = curr => {
         let startRowIdx,startColumnIdx,currRowIdx,currColumnIdx,count = 0;
         data.some((row,index)=>{
+            console.log(`[index] status currBlock startRowIdx startColumnIdx count`)
             // row 
             let startIndex = row.indexOf(currBlock);
             if(startIndex != -1) {
                 startRowIdx = index, 
                 startColumnIdx = startIndex; 
                 count++;
-                // console.log(`[${index}] start ${currBlock.type}, ${startRowIdx}, ${startColumnIdx}, ${count}`)
+                console.log(`[${index}] \tstart \t${currBlock.type}\t\t\t${startRowIdx}\t\t\t${startColumnIdx}\t\t\t${count}`)
             }
             let currIndex = row.indexOf(curr);
             if(currIndex != -1) {
                 currRowIdx = index, 
                 currColumnIdx = currIndex, 
                 count++;
-                // console.log(`[${index}] curr ${curr.type}, ${currRowIdx}, ${currColumnIdx}, ${count}`)
+                console.log(`[${index}] \tcurr \t${curr.type}\t\t\t${currRowIdx}\t\t\t${currColumnIdx}\t\t\t${count}`)
             }
-            // console.log('----------------------')
+            console.log('-----------------------------------------------------------')
             return count == 2;
         })
         const isSameBlock = curr == currBlock
@@ -130,9 +127,11 @@ const Game = (() => {
             return
         }
         for(let i = 0; i < fillCnt; i++){
-            const temp = fill.length - i - 1
-            fill[temp].forEach((row,idx)=>{
-                if(row) data[fillCnt - i -1][idx] = row;
+            const rowTemp = fill.length - i - 1
+            fill[rowTemp].forEach((columTemp,idx)=>{
+                const row = fillCnt -i -1;
+                const column = idx;
+                if(columTemp) data[row][column] = columTemp;
             })
         }
         fillCnt++;
@@ -181,7 +180,7 @@ const Game = (() => {
         table.addEventListener("mouseup", up);
         table.addEventListener("mouseleave", leave);
         table.addEventListener("mousemove", move);
-        console.log(data)
+        // console.log(data)
         render();
     }
     
@@ -196,6 +195,6 @@ const log =data=>{
         acc = `${acc} ${curr} : ${data[curr]}\n`
         return acc;
     },'')
-    console.log(result)
+    // console.log(result)
 }
 
